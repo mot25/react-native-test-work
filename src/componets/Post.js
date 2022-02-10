@@ -1,21 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import { Feather, MaterialIcons } from '@expo/vector-icons';
-
+import { Context } from '../context/Context'
 
 
 export default function Post({ item }) {
 
+    const { delPost, posts, editValue } = useContext(Context)
+    const [edit, setedit] = useState(false)
+    const [valueEdit, setvalueEdit] = useState(false)
 
+    const editFun = (id, title) => {
+        editValue(posts.map(item => {
+            if (item.id == id) {
+                item.title = title
+            }
+            return item
+        }))
+    }
 
     return (
         <View style={styles.postCard}>
             <View style={styles.inputCard}>
-                <TextInput maxLength={54}  value={item.title} />
+                <TextInput
+                    editable={edit ? true : false}
+                    onChangeText={setvalueEdit}
+                    defaultValue={item.title} />
             </View>
             <View style={styles.iconCard}>
-                <Feather style={styles.icon} name="edit" size={30} color="black" />
-                <MaterialIcons style={styles.icon} name="delete-forever" size={30} color="black" />
+                {edit
+                    ?
+                    <MaterialIcons.Button backgroundColor='#FFF' style={styles.icon}
+                        onPress={() => {
+                            setedit(!edit)
+                            editFun(item.id, valueEdit)
+                        }} name="done"
+                        size={30}
+                        color="black" />
+                    :
+                    <Feather.Button backgroundColor='#FFF' style={styles.icon}
+                        onPress={() => {
+                            setedit(!edit)
+                        }}
+                        name="edit"
+                        size={30}
+                        color="black"
+                    />}
+                <MaterialIcons.Button
+                    backgroundColor='#FFF'
+                    style={styles.icon}
+                    name="delete-forever"
+                    onPress={() => delPost(item.id)}
+                    size={30} color="black"
+                />
             </View>
         </View>
     )
@@ -24,12 +61,13 @@ export default function Post({ item }) {
 
 const styles = StyleSheet.create({
     postCard: {
+        marginVertical: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderWidth: 2,
         borderColor: '#fff',
-        padding: 20,
+        padding: 10,
         shadowColor: '#000',
         shadowRadius: 2,
         shadowOpacity: 0.3,
@@ -48,6 +86,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     icon: {
-        marginHorizontal: 10
+        // marginHorizontal: 0
     }
 })

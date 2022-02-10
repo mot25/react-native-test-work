@@ -1,40 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, StyleSheet, FlatList, View, TouchableOpacity, Text } from 'react-native'
 import AppInput from '../componets/UI/AppInput'
-import { FontAwesome } from '@expo/vector-icons';
 import Post from '../componets/Post';
+import { Context } from '../context/Context';
 
 export default function PostsScreens() {
+    const { loadPosts, addArrPosts, posts } = useContext(Context)
 
-    const [posts, setposts] = useState([])
-    const [loadPosts, setloadPosts] = useState(true)
 
-    const fetchPosts = async () => {
-        await fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json())
-            .then(data => {
-                setposts(data)
-                setloadPosts(false)
-            })
-    }
+
 
     useEffect(() => {
-        fetchPosts()
+        addArrPosts()
     }, [])
 
     return (
-        <View>
+        <View style={{ paddingBottom: 20 }}>
             <View style={styles.addPost}>
                 <AppInput />
-                <FontAwesome.Button name="send" size={24} color="#696969" backgroundColor='transparent' ></FontAwesome.Button>
             </View>
             {loadPosts
                 ? <Text style={{ textAlign: 'center' }}>Loading...</Text>
                 : <FlatList data={posts} renderItem={({ item }) => (
-                    <View style={styles.cardWrapper}>
+                    <View key={item.id} style={styles.cardWrapper}>
                         <TouchableOpacity
                             activeOpacity={0.2}
-                            onPress={() => console.log('onPress')}
+                            onPress={() => console.log(item.title)}
                             onLongPress={() => console.log('onLongPress')}
                         >
                             <Post item={item} />
@@ -49,6 +40,7 @@ export default function PostsScreens() {
 const styles = StyleSheet.create({
     cardWrapper: {
         // alignItems: 'center'
+
     },
     addPost: {
         flexDirection: 'row',

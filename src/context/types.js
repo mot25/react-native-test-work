@@ -1,0 +1,5 @@
+export const ADD_POST = 'ADD_POST'
+export const DEL_POST = 'DEL_POST'
+export const ADD_ARR_POSTS = 'ADD_ARR_POSTS'
+export const SET_LOAD_POSTS = 'SET_LOAD_POSTS'
+export const EDIT_ARR_POSTS = 'EDIT_ARR_POSTS'
