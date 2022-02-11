@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, StyleSheet, FlatList, View, TouchableOpacity, Text } from 'react-native'
-import AppInput from '../componets/UI/AppInput'
+import AppInput from '../componets/AppInput'
 import Post from '../componets/Post';
 import { Context } from '../context/Context';
 
-export default function PostsScreens() {
+export default function PostsScreens({ navigation }) {
     const { loadPosts, addArrPosts, posts } = useContext(Context)
 
 
@@ -25,8 +25,7 @@ export default function PostsScreens() {
                     <View key={item.id} style={styles.cardWrapper}>
                         <TouchableOpacity
                             activeOpacity={0.2}
-                            onPress={() => console.log(item.title)}
-                            onLongPress={() => console.log('onLongPress')}
+                            onPress={() => navigation.navigate('PostsId', { id: item.id, name: item.title, body: item.body })}
                         >
                             <Post item={item} />
                         </TouchableOpacity>
@@ -48,5 +47,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         height: 60,
         paddingHorizontal: 10,
-    }
+    },
+ 
 })

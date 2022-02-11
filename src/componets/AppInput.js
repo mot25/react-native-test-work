@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { Alert, Button, Modal, StyleSheet, Text, TextInput, View } from 'react-native'
-import { Context } from '../../context/Context'
+import { Context } from '../context/Context'
 
 export default function AppInput() {
 
