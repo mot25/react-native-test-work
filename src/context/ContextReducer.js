@@ -54,7 +54,7 @@ export default function ContextReducer(state, action) {
         case DEL_COMMENT:
             return { ...state, comments: state.comments.filter(item => item.id !== action.id) }
         case EDIT_ARR_COMMENTS:
-            return { ...state, posts: action.arr }
+            return { ...state, comments: action.arr }
 
         default:
             return state

@@ -5,13 +5,13 @@ import { Context } from '../context/Context';
 
 export default function Comment({ item }) {
     const [edit, setedit] = useState(false)
-    const { editValueComm, comments, editValue, delComm } = useContext(Context)
+    const {  comments, editValueComm, delComm } = useContext(Context)
 
     const [valueEdit, setvalueEdit] = useState(item.body)
 
     const editTitle = () => {
         setedit(false)
-        editValue(comments.map(comm => {
+        editValueComm(comments.map(comm => {
             if (comm.id === item.id) {
                 comm.body = valueEdit
             }
